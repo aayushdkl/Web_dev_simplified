@@ -1,3 +1,5 @@
+const audioContext = new AudioContext()
+
 const NOTE_DETAILS = [
   { note: "C", key: "Z", frequency: 261.626, active:false },
   { note: "Db", key: "S", frequency: 277.183, active:false},
@@ -50,7 +52,28 @@ function playNotes(){
   NOTE_DETAILS.forEach(n => {
     let selec1 = document.querySelector(`[data-note="${n.note}"]`)
     selec1.classList.toggle('active',n.active)
+    if (n.oscilllator!= null) {
+      n.oscilllator.disconnect()
+    }
 
   });
+  const activeNotes = NOTE_DETAILS.filter(n => n.active)
+  const gain = 1/activeNotes.length
+  activeNotes.forEach(n=> {
 
+    startNote(n,gain)
+  })
+
+}
+
+function startNote(notedetail,gain)
+{
+  const gainNode = audioContext.createGain()
+  gainNode.gain.value = gain
+  const oscilllator = audioContext.createOscillator()
+  oscilllator.frequency.value = notedetail.frequency
+  oscilllator.type = 'sine'
+  oscilllator.connect(gainNode).connect(audioContext.destination)
+  oscilllator.start()
+  notedetail.oscilllator = oscilllator
 }
