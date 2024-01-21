@@ -9,7 +9,7 @@ let form = document.querySelector("#quiz-form");
 let answer = document.querySelectorAll(".answer");
 let questions = Array.from(document.querySelectorAll(".question-item"));
 
-let alert1 = document.getElementById("alert");
+let alert = document.getElementById("alert");
 
 // TODO: 3. Create a submit event listener for the form that does the following.
 //    1. Prevent the default behaviour
@@ -22,7 +22,7 @@ let alert1 = document.getElementById("alert");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  let ticked_ans = document.querySelectorAll('input[type="radio"]:checked');
+  let ticked_ans = Array.from(document.querySelectorAll('input[type="radio"]:checked'));
   questions.forEach((questions) => {
     questions.classList.add("incorrect");
     questions.classList.remove("correct");
@@ -40,14 +40,14 @@ form.addEventListener("submit", (e) => {
       to_change.classList.add("incorrect");
       to_change.classList.remove("correct");
     }
+    const allTrue = ticked_ans.every(answer => answer.value === "true");
+    const allAnswered = ticked_ans.length === questions.length;
+    if (allTrue && allAnswered) {
+      alert.classList.add("active");
+      setTimeout(() => {
+        alert.classList.remove("active");
+      }, 1000);
+    }
   });
-  const allTrue = ticked_ans.every((answer) => answer.value === "true");
-  const allAnswered = ticked_ans.length === questions.length;
 
-  if (allTrue && allAnswered) {
-    alert1.classList.add("active");
-    setTimeout(() => {
-      alert1.classList.remove("active");
-    }, 1000);
-  }
 });
