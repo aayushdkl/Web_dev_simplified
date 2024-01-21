@@ -10,7 +10,7 @@ const NOTE_DETAILS = [
   { note: "Gb", key: "G", frequency: 369.994 ,active:false},
   { note: "G", key: "B", frequency: 391.995 ,active:false},
   { note: "Ab", key: "H", frequency: 415.305 ,active:false},
-  { note: "A", key: "N", frequency: 440 ,active:false},
+  { note: "A", key: "N", frequency: 440 ,active:false}, 
   { note: "Bb", key: "J", frequency: 466.164 ,active:false},
   { note: "B", key: "M", frequency: 493.883 ,active:false},
 ];
@@ -22,7 +22,7 @@ document.addEventListener("keydown", (e) => {
   let keypressed = e.code;
   // console.log(keypressed);   //KeyD
   let note_detail = checkthekey(keypressed);
-  console.log(note_detail);
+  // console.log(note_detail);
   if (note_detail == null) {
     return;
   }
